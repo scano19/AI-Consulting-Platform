@@ -32,8 +32,8 @@ Soy **Sergio Cano Echaniz**, consultor independiente en IA aplicada al negocio y
 - **Casi 20 años como gestor de fondos de inversión**
 - Fondo **más rentable de España** en renta variable mixta europea  
   *(2015 y 2016 – según Expansión)*
-- Fondo **más rentable de Europa** en su categoría  
-  *(2017 – según Lipper)*
+- Fondo **más rentable de Europa** a 3 años en su categoría  
+  *(en un momento del 2017 – según Lipper)*
 
 Tras mi carrera en gestión de activos, me especialicé en **Data Analytics e Inteligencia Artificial**, trasladando la misma disciplina:
 - análisis,
