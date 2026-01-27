@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Version: SSL Fix - www.optionsia.com -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SercaIA | Strategic AI Consultant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <script>
+        // Anti-Copy Protection
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', event => {
+            if (event.key === 'F12' || (event.ctrlKey && event.shiftKey && event.key === 'I') || (event.ctrlKey && event.key === 'u')) {
+                event.preventDefault();
+            }
+        });
+    </script>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #050510;
+            color: white;
+            overflow-x: hidden;
+            user-select: none;
+            /* Disable text selection */
+            -webkit-user-select: none;
+        }
+
+        .premium-bg {
+            background-image: url('assets/bg.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .overlay {
+            background: linear-gradient(to bottom, rgba(5, 5, 16, 0.4), rgba(5, 5, 16, 0.95));
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #c4b5fd 0%, #38bdf8 50%, #fcd34d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .scene {
+            perspective: 1500px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 0px;
+        }
+
+        .carousel {
+            width: 300px;
+            height: 200px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate 20s infinite linear;
+        }
+
+        .carousel:hover {
+            animation-play-state: paused;
+        }
+
+        .card {
+            position: absolute;
+            width: 300px;
+            height: 200px;
+            left: 0;
+            top: 0;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.2);
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: 0 0 50px rgba(252, 211, 77, 0.4);
+            border-color: rgba(252, 211, 77, 0.5);
+            cursor: pointer;
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .card:hover img {
+            opacity: 1;
+        }
+
+        .card:nth-child(1) {
+            transform: rotateY(0deg) translateZ(400px);
+        }
+
+        .card:nth-child(2) {
+            transform: rotateY(72deg) translateZ(400px);
+        }
+
+        .card:nth-child(3) {
+            transform: rotateY(144deg) translateZ(400px);
+        }
+
+        .card:nth-child(4) {
+            transform: rotateY(216deg) translateZ(400px);
+        }
+
+        .card:nth-child(5) {
+            transform: rotateY(288deg) translateZ(400px);
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotateY(0deg);
+            }
+
+            to {
+                transform: rotateY(360deg);
+            }
+        }
+
+        .glass-box {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* FIXED BUTTON STYLE */
+        .lang-btn {
+            position: fixed;
+            /* Esto asegura que siempre se vea */
+            top: 25px;
+            right: 25px;
+            background: rgba(30, 41, 59, 0.9);
+            color: #38bdf8;
+            padding: 10px 24px;
+            border-radius: 30px;
+            border: 2px solid #38bdf8;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+            z-index: 9999;
+            /* Por encima de todo */
+        }
+
+        .lang-btn:hover {
+            background: #38bdf8;
+            color: black;
+            box-shadow: 0 0 40px rgba(56, 189, 248, 0.8);
+            transform: scale(1.05);
+        }
+
+        /* CONSULTING BUTTON STYLE */
+        .consult-btn {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            background: rgba(30, 41, 59, 0.9);
+            color: #fcd34d;
+            /* Gold/Amber text */
+            padding: 12px 28px;
+            border-radius: 30px;
+            border: 2px solid #fcd34d;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1.1rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 0 25px rgba(252, 211, 77, 0.3);
+            z-index: 9999;
+            text-decoration: none;
+            overflow: hidden;
+            animation: pulse-gold 3s infinite;
+        }
+
+        .consult-btn:hover {
+            background: #fcd34d;
+            color: black;
+            box-shadow: 0 0 50px rgba(252, 211, 77, 0.8);
+            transform: scale(1.05);
+        }
+
+        @keyframes pulse-gold {
+            0% {
+                box-shadow: 0 0 25px rgba(252, 211, 77, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(252, 211, 77, 0.6);
+            }
+
+            100% {
+                box-shadow: 0 0 25px rgba(252, 211, 77, 0.3);
+            }
+        }
+    </style>
+</head>
+
+<body class="premium-bg min-h-screen flex flex-col items-center">
+    <!-- BUTTON OUTSIDE HEADER -->
+    <button onclick="toggleLang()" class="lang-btn" id="langToggle">
+        <i class="fa-solid fa-globe"></i> <span>ESPAÑOL</span>
+    </button>
+
+    <!-- CONSULTING CTA (Fixed Top Left) - REMOVED -->
+
+    <div class="fixed inset-0 overlay -z-10"></div>
+
+    <!-- Header -->
+    <header class="w-full px-6 py-4 flex justify-start gap-16 items-center w-full relative z-20">
+        <div class="text-2xl font-bold tracking-widest uppercase">Serca<span class="text-sky-400">IA</span></div>
+        <div class="flex items-center">
+            <nav class="hidden md:flex gap-8 text-sm font-light tracking-wide text-gray-300">
+                <a href="#" class="hover:text-white transition" data-key="vision">Vision</a>
+                <a href="#" class="hover:text-white transition" data-key="projects">Projects</a>
+                <a href="#" class="hover:text-white transition" data-key="contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Content -->
+    <main class="flex-grow flex flex-col justify-center items-center text-center px-4 z-10 w-full max-w-7xl">
+
+        <div class="mb-12 space-y-4">
+            <h2 class="text-blue-400 tracking-[0.2em] text-sm uppercase font-bold animate-pulse" data-key="subtitle">
+                Architecting The Future</h2>
+            <h1 class="text-5xl md:text-7xl font-bold leading-tight">
+                <span data-key="title1">Strategic Vision.</span> <br>
+                <span class="text-gradient" data-key="title2">Financial Mastery.</span> <br>
+                <span class="text-white" data-key="title3">AI Transformation.</span>
+            </h1>
+            <p class="text-gray-400 max-w-2xl mx-auto text-lg font-light mt-6" data-key="desc">
+                Redefining business processes through Data Analytics and Artificial Intelligence.
+            </p>
+        </div>
+
+        <!-- NEW HERO CTA BUTTON -->
+        <a href="consultoria.html" class="mb-16 relative inline-flex group">
+            <div
+                class="absolute transition-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-xl blur-lg group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-200 animate-tilt">
+            </div>
+            <button
+                class="relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-gray-900 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+                role="button">
+                <i class="fa-solid fa-bolt text-yellow-500 mr-3 animate-pulse"></i>
+                <span data-key="heroBtn">TRY AUTOMATED CONSULTING (FREE)</span>
+            </button>
+        </a>
+
+        <!-- 3D Rotating Glass Showroom -->
+        <div class="scene">
+            <div class="carousel">
+                <a href="https://optionsia.com" target="_blank" rel="noopener noreferrer" class="card group">
+                    <img src="assets/optionsia.png" alt="OptionsIA">
+                    <div
+                        class="absolute bottom-0 w-full bg-black/80 p-3 text-center translate-y-full group-hover:translate-y-0 transition duration-300">
+                        <h3 class="font-bold text-sky-400">OptionsIA.com</h3>
+                        <p class="text-xs text-gray-400" data-key="card1">Financial AI Trading</p>
+                    </div>
+                </a>
+                <a href="https://autonomoia.es" target="_blank" rel="noopener noreferrer" class="card group">
+                    <img src="assets/autonomoia.png" alt="AutonomoIA">
+                    <div
+                        class="absolute bottom-0 w-full bg-black/80 p-3 text-center translate-y-full group-hover:translate-y-0 transition duration-300">
+                        <h3 class="font-bold text-sky-400">AutonomoIA.es</h3>
+                        <p class="text-xs text-gray-400" data-key="card2">Smart Freelance Network</p>
+                    </div>
+                </a>
+                <a href="https://opticaia.shop" target="_blank" rel="noopener noreferrer" class="card group">
+                    <img src="assets/opticaia.png" alt="OpticaIA">
+                    <div
+                        class="absolute bottom-0 w-full bg-black/80 p-3 text-center translate-y-full group-hover:translate-y-0 transition duration-300">
+                        <h3 class="font-bold text-sky-400">OpticaIA.shop</h3>
+                        <p class="text-xs text-gray-400" data-key="card3">Next-Gen E-commerce</p>
+                    </div>
+                </a>
+                <a href="https://campusia.es" target="_blank" rel="noopener noreferrer" class="card group">
+                    <img src="assets/campusia.png" alt="CampusIA">
+                    <div
+                        class="absolute bottom-0 w-full bg-black/80 p-3 text-center translate-y-full group-hover:translate-y-0 transition duration-300">
+                        <h3 class="font-bold text-sky-400">CampusIA.es</h3>
+                        <p class="text-xs text-gray-400" data-key="card4">AI Education Platform</p>
+                    </div>
+                </a>
+                <a href="#" class="card group">
+                    <img src="assets/n8n_voice.png" alt="AI Voice Assistant">
+                    <div
+                        class="absolute bottom-0 w-full bg-black/80 p-3 text-center translate-y-full group-hover:translate-y-0 transition duration-300">
+                        <h3 class="font-bold text-sky-400">AI Voice Assistant</h3>
+                        <p class="text-xs text-gray-400" data-key="card5">Voice AI Automation</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Tagline / Bottom -->
+        <div class="mt-20 glass-box px-8 py-4 rounded-full flex gap-8 items-center">
+            <div class="flex flex-col">
+                <span class="text-2xl font-bold text-white">4+</span>
+                <span class="text-xs text-gray-400 uppercase" data-key="stat1">Major Projects</span>
+            </div>
+            <div class="h-8 w-px bg-gray-600"></div>
+            <div class="flex flex-col">
+                <span class="text-2xl font-bold text-white">100%</span>
+                <span class="text-xs text-gray-400 uppercase" data-key="stat2">Automation</span>
+            </div>
+            <div class="h-8 w-px bg-gray-600"></div>
+            <div class="text-right">
+                <p class="text-sm font-semibold" data-key="cta1">Ready to scale?</p>
+                <p class="text-xs text-sky-400 cursor-pointer hover:underline" data-key="cta2">Contact Me &rarr;</p>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="w-full py-6 text-center text-gray-600 text-xs">
+        <p>&copy; 2026 SercaIA Portfolio. <span data-key="rights">All rights reserved.</span></p>
+    </footer>
+
+    <script>
+        const translations = {
+            en: {
+                vision: "Vision", projects: "Projects", contact: "Contact",
+                subtitle: "Architecting The Future",
+                title1: "Strategic Vision.", title2: "Financial Mastery.", title3: "AI Transformation.",
+                desc: "Redefining business processes through Data Analytics and Artificial Intelligence.",
+                card1: "Financial AI Trading", card2: "Smart Freelance Network",
+                card3: "Next-Gen E-commerce", card4: "AI Education Platform",
+                card5: "Voice AI Automation",
+                stat1: "Major Projects", stat2: "Automation",
+                cta1: "Ready to scale?", cta2: "Contact Me →",
+                rights: "All rights reserved.",
+                btnText: "ESPAÑOL",
+                consultBtn: "Auto-Consulting (3 min)",
+                heroBtn: "TRY AUTOMATED CONSULTING (FREE)"
+            },
+            es: {
+                vision: "Visión", projects: "Proyectos", contact: "Contacto",
+                subtitle: "Arquitectura del Futuro",
+                title1: "Visión Estratégica.", title2: "Maestría Financiera.", title3: "Transformación IA.",
+                desc: "Redefiniendo procesos a través de análisis de datos e inteligencia artificial.",
+                card1: "Trading con IA Financiera", card2: "Red Freelance Inteligente",
+                card3: "E-commerce de Nueva Generación", card4: "Plataforma Educativa IA",
+                card5: "Automatización de Voz IA",
+                stat1: "Grandes Proyectos", stat2: "Automatización",
+                cta1: "¿Listo para escalar?", cta2: "Contáctame →",
+                rights: "Todos los derechos reservados.",
+                btnText: "ENGLISH",
+                consultBtn: "Consultoría Automática (3 min)",
+                heroBtn: "PROBAR CONSULTORÍA AUTOMÁTICA (GRATIS)"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function toggleLang() {
+            currentLang = currentLang === 'en' ? 'es' : 'en';
+            updateText();
+        }
+
+        function updateText() {
+            const elements = document.querySelectorAll('[data-key]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[currentLang][key]) {
+                    el.innerText = translations[currentLang][key];
+                }
+            });
+            const btn = document.getElementById('langToggle');
+            btn.innerHTML = '<i class="fa-solid fa-globe"></i> <span>' + translations[currentLang].btnText + '</span>';
+        }
+
+        // Initialize translation
+        updateText();
+    </script>
+</body>
+
+</html>

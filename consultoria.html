@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SercaIA | Consultoría Estratégica Automática</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', event => {
+            if (event.key === 'F12' || (event.ctrlKey && event.key === 'u')) event.preventDefault();
+        });
+    </script>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #050510;
+            color: white;
+            overflow-x: hidden;
+            user-select: none;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .premium-bg {
+            background-image: url('assets/bg.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .overlay {
+            background: linear-gradient(to bottom, rgba(5, 5, 16, 0.6), rgba(5, 5, 16, 0.98));
+        }
+
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .input-glass {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+
+        .input-glass:focus {
+            outline: none;
+            border-color: #38bdf8;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+        }
+
+        .btn-glow {
+            background: linear-gradient(135deg, #38bdf8 0%, #3b82f6 100%);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+        }
+
+        .btn-glow:hover {
+            box-shadow: 0 0 40px rgba(56, 189, 248, 0.7);
+            transform: translateY(-2px);
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hidden-step {
+            display: none;
+        }
+
+        .terminal-window {
+            background: #1e1e1e;
+            border-radius: 8px;
+            border: 1px solid #333;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes shine {
+            100% {
+                left: 125%;
+            }
+        }
+
+        .group:hover .animate-shine {
+            animation: shine 1s;
+        }
+    </style>
+</head>
+
+<body class="premium-bg min-h-screen flex flex-col items-center">
+
+    <div class="fixed inset-0 overlay -z-10"></div>
+
+    <!-- HEADER -->
+    <header class="w-full p-8 flex justify-between items-center max-w-7xl mx-auto z-20">
+        <a href="index.html" class="flex items-center gap-3 text-white/50 hover:text-white transition">
+            <i class="fa-solid fa-arrow-left"></i> Volver al Portfolio
+        </a>
+        <div class="text-2xl font-bold tracking-widest uppercase">Serca<span class="text-sky-400">IA</span> | Consulting
+        </div>
+    </header>
+
+    <main class="w-full max-w-6xl px-4 z-10 py-10">
+
+        <!-- STEP 1: INTRO -->
+        <div id="step-intro" class="text-center space-y-8 fade-in">
+            <h1 class="text-6xl font-bold mb-4">
+                Consultoría Estratégica <br> <span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-500">Automatizada</span>
+            </h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                Nuestros agentes de IA analizarán tu negocio en tiempo real. Obtén un Blueprint Estratégico, cálculo de
+                ROI y una demostración técnica en 2 min.
+            </p>
+            <button onclick="startConsulting()"
+                class="btn-glow text-white font-bold py-4 px-12 rounded-full text-lg transition duration-300">
+                INICIAR ANÁLISIS GRATUITO <i class="fa-solid fa-chevron-right ml-2"></i>
+            </button>
+        </div>
+
+        <!-- STEP 2: FORM (McKinsey Style) -->
+        <div id="step-form" class="hidden-step glass-panel p-10 max-w-2xl mx-auto">
+            <div class="flex justify-between items-center mb-6 border-b border-gray-700/50 pb-4">
+                <h2 class="text-2xl font-bold text-sky-400"><i class="fa-solid fa-database mr-2"></i> Datos del Negocio
+                </h2>
+                <span class="text-xs text-gray-400">Confidencial</span>
+            </div>
+
+            <form id="consultingForm" class="space-y-6">
+                <!-- Row 1 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Nombre de la Empresa</label>
+                        <input type="text" id="businessName" class="w-full p-4 input-glass"
+                            placeholder="Ej. Logística Rápida S.L.">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Email Corporativo o Personal</label>
+                        <input type="email" id="email" class="w-full p-4 input-glass" placeholder="tu@email.com">
+                    </div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Sector / Industria</label>
+                        <select id="industry" class="w-full p-4 input-glass bg-transparent">
+                            <option value="" class="bg-gray-900">Selecciona...</option>
+                            <option value="retail" class="bg-gray-900">Retail / E-commerce</option>
+                            <option value="startup" class="bg-gray-900 text-sky-400 font-bold">Startup / SaaS (High
+                                Growth)</option>
+                            <option value="restauracion" class="bg-gray-900">Restauración / Hostelería</option>
+                            <option value="turismo" class="bg-gray-900">Turismo / Hoteles</option>
+                            <option value="construction" class="bg-gray-900">Construcción / Inmobiliaria</option>
+                            <option value="agro" class="bg-gray-900">Agricultura / Ganadería</option>
+                            <option value="finance" class="bg-gray-900">Finanzas / Legal</option>
+                            <option value="health" class="bg-gray-900">Salud / Estética</option>
+                            <option value="other" class="bg-gray-900">Otro / Servicios</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Tamaño (Capacidad)</label>
+                        <select id="capacity" class="w-full p-4 input-glass bg-transparent">
+                            <option value="small" class="bg-gray-900">Pequeña (1 - 10)</option>
+                            <option value="medium" class="bg-gray-900">Mediana (11 - 50)</option>
+                            <option value="large" class="bg-gray-900">Grande (50 - 200)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Principal Reto / Dolor (Opcional)</label>
+                    <textarea id="challenge" rows="3" class="w-full p-4 input-glass"
+                        placeholder="Ej. Perdemos mucho tiempo contestando emails repetitivos..."></textarea>
+                </div>
+
+                <!-- Row 3 (NEW QUESTIONS) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Facturación Anual Aprox.</label>
+                        <select id="revenue" class="w-full p-4 input-glass bg-transparent">
+                            <option value="" class="bg-gray-900">Selecciona...</option>
+                            <option value="under50k" class="bg-gray-900">
+                                < 50k€</option>
+                            <option value="50k-200k" class="bg-gray-900">50k€ - 200k€</option>
+                            <option value="200k-1M" class="bg-gray-900">200k€ - 1M€</option>
+                            <option value="over1M" class="bg-gray-900">> 1M€</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Herramientas Actuales</label>
+                        <input type="text" id="tools" class="w-full p-4 input-glass"
+                            placeholder="Ej. Excel, Salesforce, WhatsApp...">
+                    </div>
+                </div>
+
+                <!-- Row 4 (NEW QUESTIONS) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Prioridad Principal</label>
+                        <select id="priority" class="w-full p-4 input-glass bg-transparent">
+                            <option value="efficiency" class="bg-gray-900">Ahorrar Tiempo / Eficiencia</option>
+                            <option value="growth" class="bg-gray-900">Vender Más / Escalar</option>
+                            <option value="innovation" class="bg-gray-900">Innovar / Imagen de Marca</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Plazo de Decisión</label>
+                        <select id="timeline" class="w-full p-4 input-glass bg-transparent">
+                            <option value="now" class="bg-gray-900">Inmediato (Este mes)</option>
+                            <option value="soon" class="bg-gray-900">1 - 3 Meses</option>
+                            <option value="explore" class="bg-gray-900">Solo explorando</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Row 5 (NEW QUESTIONS) -->
+                <div class="mb-4">
+                    <label class="block text-sm text-gray-400 mb-2">Presupuesto para Innovación</label>
+                    <select id="budget" class="w-full p-4 input-glass bg-transparent">
+                        <option value="low" class="bg-gray-900">Básico (Low Cost)</option>
+                        <option value="medium" class="bg-gray-900">Medio (Profesional)</option>
+                        <option value="high" class="bg-gray-900">Alto (Premium/Enterprise)</option>
+                    </select>
+                </div>
+
+                <!-- NDA CHECK -->
+                <div class="flex items-start gap-3 bg-gray-900/50 p-3 rounded-lg border border-gray-700/50">
+                    <input type="checkbox" id="ndaCheck"
+                        class="mt-1 w-4 h-4 rounded text-sky-500 bg-gray-800 border-gray-600 focus:ring-sky-500">
+                    <label for="ndaCheck" class="text-xs text-gray-400 cursor-pointer select-none">
+                        <span class="text-white font-bold">Confidencialidad Garantizada (NDA):</span>
+                        Solicito que mis datos sean tratados bajo secreto profesional y borrados tras el análisis.
+                    </label>
+                </div>
+
+                <div class="pt-2">
+                    <button type="button" onclick="processAnalysis()"
+                        class="w-full btn-glow text-white font-bold py-4 rounded-xl text-lg transition duration-300 transform hover:scale-[1.01] active:scale-95">
+                        GENERAR BLUEPRINT ESTRATÉGICO <i class="fa-solid fa-fingerprint ml-2"></i>
+                    </button>
+                    <p class="text-[10px] text-center text-gray-600 mt-2"><i class="fa-solid fa-lock"></i> Conexión
+                        encriptada SSL 256-bit</p>
+                </div>
+            </form>
+        </div>
+
+        <!-- STEP 3: SIMULATION -->
+        <div id="step-simulation" class="hidden-step text-center max-w-3xl mx-auto">
+            <div class="grid grid-cols-2 gap-8 mb-10">
+                <div class="glass-panel p-6 flex flex-col items-center">
+                    <div
+                        class="w-20 h-20 rounded-full bg-blue-900/50 flex items-center justify-center text-3xl mb-4 animate-pulse">
+                        🧠</div>
+                    <h3 class="font-bold text-blue-300">Strategic Guru</h3>
+                    <div id="log-strategy" class="text-xs text-gray-400 mt-2 h-16 overflow-hidden font-mono">
+                        Initializing...</div>
+                </div>
+                <div class="glass-panel p-6 flex flex-col items-center">
+                    <div
+                        class="w-20 h-20 rounded-full bg-purple-900/50 flex items-center justify-center text-3xl mb-4 animate-pulse">
+                        ⚡</div>
+                    <h3 class="font-bold text-purple-300">Automation Architect</h3>
+                    <div id="log-automation" class="text-xs text-gray-400 mt-2 h-16 overflow-hidden font-mono">
+                        Waiting...</div>
+                </div>
+            </div>
+            <div class="w-full bg-gray-800 rounded-full h-2 mb-4 overflow-hidden">
+                <div id="progress-bar" class="bg-sky-500 h-2 rounded-full transition-all duration-300"
+                    style="width: 0%"></div>
+            </div>
+            <p id="main-status" class="text-sky-400 animate-pulse">Analizando modelo de negocio...</p>
+        </div>
+
+        <!-- STEP 4: RESULTS (GURU BLUEPRINT) -->
+        <div id="step-results"
+            class="hidden-step flex flex-col justify-center items-center perspective-1000 py-10 relative">
+
+            <!-- TOAST -->
+            <div id="email-toast"
+                class="fixed top-24 right-5 bg-green-500/90 text-white px-6 py-4 rounded-xl shadow-lg transform translate-x-full transition-transform duration-500 z-50 flex items-center gap-3">
+                <div class="bg-white/20 rounded-full p-2"><i class="fa-solid fa-paper-plane"></i></div>
+                <div>
+                    <h4 class="font-bold text-sm">Informe Enviado</h4>
+                    <p class="text-xs opacity-90">Desde: info@sercaia.com</p>
+                </div>
+            </div>
+
+            <!-- CARD -->
+            <div
+                class="relative w-full max-w-6xl bg-[#0a0a12] border border-sky-500/30 rounded-3xl p-8 shadow-[0_0_100px_rgba(56,189,248,0.15)] overflow-hidden">
+                <div
+                    class="absolute inset-0 bg-[linear-gradient(rgba(56,189,248,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(56,189,248,0.03)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none">
+                </div>
+
+                <!-- Header -->
+                <div
+                    class="relative z-10 flex flex-col md:flex-row justify-between items-center mb-8 border-b border-white/10 pb-6 gap-6">
+                    <div class="text-left">
+                        <div
+                            class="inline-flex items-center gap-2 px-3 py-1 rounded bg-sky-900/30 border border-sky-500/30 text-sky-400 text-[10px] font-mono tracking-widest mb-2">
+                            STATUS: AUDIT_COMPLETE_V1.0</div>
+                        <h2 class="text-3xl md:text-4xl font-bold text-white tracking-tight">Blueprint Estratégico</h2>
+                        <p class="text-gray-400 text-sm mt-1">Preparado para: <span id="res-business"
+                                class="text-sky-300 font-bold">TU EMPRESA</span></p>
+                    </div>
+                    <button onclick="downloadPDF()"
+                        class="group flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 px-6 py-3 rounded-xl transition-all">
+                        <div
+                            class="bg-red-500/20 text-red-400 p-2 rounded-lg group-hover:bg-red-500 group-hover:text-white transition">
+                            <i class="fa-solid fa-file-pdf"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="text-[10px] text-gray-500 uppercase tracking-wider">Documento Oficial</div>
+                            <div class="text-sm font-bold text-white">Descargar Informe</div>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- DIAGNOSIS SECTION (NEW) -->
+                <div id="res-diagnosis" class="mb-8 hidden">
+                    <div
+                        class="bg-red-900/10 border border-red-500/30 p-6 rounded-2xl flex flex-col md:flex-row gap-6 items-start">
+                        <div class="flex-shrink-0">
+                            <div
+                                class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center text-red-500 text-2xl animate-pulse">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow">
+                            <h4 class="text-red-400 font-bold text-sm uppercase tracking-widest mb-1">Tu Principal Dolor
+                                Detectado</h4>
+                            <p class="text-white text-lg font-bold mb-3 italic">"<span id="res-problem-text">...</span>"
+                            </p>
+
+                            <div class="bg-black/40 p-4 rounded-xl border-l-4 border-green-500">
+                                <h5 class="text-green-400 font-bold text-xs uppercase mb-1"><i
+                                        class="fa-solid fa-check mr-1"></i> Solución Inmediata SercaIA</h5>
+                                <p class="text-gray-300 text-sm" id="res-solution-text">...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GURU INSIGHTS SECTION (Existing - RENAMED) -->
+                <div class="relative z-10 mb-12">
+                    <h3 class="text-white font-bold text-2xl mb-6 flex items-center gap-3">
+                        <span class="bg-yellow-500/20 text-yellow-400 p-2 rounded-lg"><i
+                                class="fa-solid fa-lightbulb"></i></span>
+                        Consejos Estratégicos
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="guru-keys-container">
+                        <!-- Dynamic Keys will go here (Modified layout) -->
+                    </div>
+                </div>
+
+                <!-- PSYCHOLOGICAL TRIGGERS SECTION (NEW) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 hidden" id="res-psychology">
+                    <!-- 1. FOMO / Competitor Benchmark -->
+                    <div
+                        class="bg-slate-900/80 border border-slate-700/50 p-6 rounded-2xl relative overflow-hidden group hover:border-red-500/30 transition">
+                        <div class="absolute -right-4 -top-4 text-slate-800 text-9xl opacity-20"><i
+                                class="fa-solid fa-eye"></i></div>
+                        <h4 class="text-gray-400 text-xs uppercase tracking-widest font-bold mb-2"><i
+                                class="fa-solid fa-crosshairs text-red-500 mr-2"></i> Benchmark Competencia</h4>
+                        <div class="relative z-10">
+                            <div class="text-xl text-white font-bold mb-1">Tu Competencia: <span
+                                    class="text-green-400">Nivel 4.0</span></div>
+                            <div class="w-full bg-slate-700 h-2 rounded-full mb-4 mt-2">
+                                <div class="bg-gradient-to-r from-green-500 to-emerald-400 h-2 rounded-full"
+                                    style="width: 80%"></div>
+                            </div>
+                            <p class="text-sm text-gray-300 italic" id="res-benchmark-text">...</p>
+                        </div>
+                    </div>
+
+                    <!-- 2. Gamification / AI Score -->
+                    <div
+                        class="bg-slate-900/80 border border-slate-700/50 p-6 rounded-2xl relative overflow-hidden group hover:border-purple-500/30 transition">
+                        <div class="absolute -right-4 -top-4 text-slate-800 text-9xl opacity-20"><i
+                                class="fa-solid fa-gauge-high"></i></div>
+                        <h4 class="text-gray-400 text-xs uppercase tracking-widest font-bold mb-2"><i
+                                class="fa-solid fa-award text-purple-500 mr-2"></i> Tu AI Readiness Score</h4>
+                        <div class="flex items-center gap-4 relative z-10">
+                            <div class="relative w-20 h-20 flex items-center justify-center">
+                                <svg class="w-full h-full transform -rotate-90">
+                                    <circle cx="40" cy="40" r="36" stroke="currentColor" stroke-width="8"
+                                        fill="transparent" class="text-slate-800" />
+                                    <circle cx="40" cy="40" r="36" stroke="currentColor" stroke-width="8"
+                                        fill="transparent" class="text-red-500" stroke-dasharray="226"
+                                        stroke-dashoffset="180" />
+                                </svg>
+                                <span class="absolute text-2xl font-bold text-white">24</span>
+                            </div>
+                            <div>
+                                <div class="text-red-400 font-bold text-lg uppercase">Nivel: Novato</div>
+                                <p class="text-xs text-gray-400">Estás perdiendo ventaja.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-8 relative z-10">
+                    <div class="md:col-span-4 space-y-4">
+                        <div class="bg-slate-900/50 border border-sky-500/20 p-6 rounded-2xl">
+                            <div class="text-gray-400 text-xs uppercase font-bold mb-1">Ahorro Proyectado</div>
+                            <div class="text-4xl font-bold text-white font-mono" id="res-savings">--</div>
+                        </div>
+                        <div class="bg-slate-900/50 border border-sky-500/20 p-6 rounded-2xl">
+                            <div class="text-gray-400 text-xs uppercase font-bold mb-1">Tiempo Recuperado</div>
+                            <div class="text-4xl font-bold text-white font-mono" id="res-hours">--</div>
+                        </div>
+                        <!-- Facturación Adicional Potencial (Gold) -->
+                        <div
+                            class="bg-slate-900/50 border border-yellow-500/20 p-6 rounded-2xl relative overflow-hidden">
+                            <div class="absolute top-0 right-0 p-3 opacity-20"><i
+                                    class="fa-solid fa-sack-dollar text-4xl text-yellow-500"></i></div>
+                            <div class="text-gray-400 text-xs uppercase tracking-wider font-bold mb-1">Facturación
+                                Adicional Est.*</div>
+                            <div class="text-4xl font-bold text-white tracking-tight font-mono text-yellow-400"
+                                id="res-revenue">--</div>
+                            <div class="text-[10px] text-yellow-600 mt-2"><i class="fa-solid fa-check-circle mr-1"></i>
+                                Basado en media del sector (McKinsey '23)</div>
+                        </div>
+                    </div>
+
+                    <!-- REAL CASE STUDY (Social Proof) -->
+                    <div
+                        class="md:col-span-8 bg-gradient-to-r from-slate-900 to-slate-800 border-l-4 border-blue-500 p-6 rounded-2xl mb-8 relative overflow-hidden shadow-lg">
+                        <div class="absolute right-0 top-0 p-4 opacity-10 text-6xl"><i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <h4 class="text-blue-400 font-bold text-xs uppercase tracking-widest mb-2">Caso de Éxito
+                            Verificado (Sector <span id="res-case-sector">...</span>)</h4>
+                        <div class="flex flex-col md:flex-row gap-6 items-center">
+                            <div class="text-3xl font-bold text-white tracking-tight" id="res-case-company">Company
+                            </div>
+                            <div class="h-8 w-px bg-slate-600 hidden md:block"></div>
+                            <div>
+                                <p class="text-xl text-green-400 font-bold font-mono" id="res-case-metric">+0%</p>
+                                <p class="text-sm text-gray-300 italic" id="res-case-desc">...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- END GRID HERE TO FORCE BREAKOUT -->
+
+                <!-- ROADMAP (Full Width Block) -->
+                <div class="w-full mt-12 pt-6 border-t border-white/5">
+                    <h3 class="text-white font-bold text-2xl mb-8">Tu Hoja de Ruta: De 0 a IA-Native</h3>
+                    <div class="flex flex-col md:flex-row gap-8 relative">
+                        <!-- Line Connector (Desktop) -->
+                        <div
+                            class="hidden md:block absolute top-8 left-0 w-full h-0.5 bg-gradient-to-r from-green-500 via-white/20 to-white/5 z-0">
+                        </div>
+
+                        <!-- Mes 1 -->
+                        <div class="relative z-10 flex-1">
+                            <div
+                                class="w-16 h-16 bg-green-900/80 border-2 border-green-500 rounded-2xl flex items-center justify-center text-3xl mb-4 shadow-[0_0_20px_rgba(34,197,94,0.3)]">
+                                🌱</div>
+                            <h4 class="text-green-400 font-bold text-xl mb-2">Mes 1: Validación</h4>
+                            <p class="text-sm text-gray-300 leading-relaxed">Implementamos el "Piloto Low-Cost" (ej.
+                                Bot WhatsApp) para generar retorno inmediato sin riesgo financiero.</p>
+                        </div>
+                        <!-- Mes 2 -->
+                        <div class="relative z-10 flex-1">
+                            <div
+                                class="w-16 h-16 bg-slate-800 border-2 border-white/20 rounded-2xl flex items-center justify-center text-3xl mb-4">
+                                ⚙️</div>
+                            <h4 class="text-white font-bold text-xl mb-2">Mes 2: Automatización</h4>
+                            <p class="text-sm text-gray-400 leading-relaxed">Conectamos el núcleo (Stock, Facturas)
+                                a la IA. Liberamos el 80% de tu carga administrativa manual.</p>
+                        </div>
+                        <!-- Mes 3 -->
+                        <div class="relative z-10 flex-1">
+                            <div
+                                class="w-16 h-16 bg-slate-800 border-2 border-white/20 rounded-2xl flex items-center justify-center text-3xl mb-4">
+                                🚀</div>
+                            <h4 class="text-white font-bold text-xl mb-2">Mes 3: Escala</h4>
+                            <p class="text-sm text-gray-400 leading-relaxed">Cultura de "Talento Aumentado". Tu
+                                equipo usa IA diariamente. El negocio escala sin contratar masivamente.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IMPLEMENTATION ARMY (REMOVED - INTERNAL) -->
+
+                <!-- AI ORGANOGRAM (Full Width Block) -->
+                <div class="w-full mt-12 pt-6 border-t border-white/5 mb-12">
+                    <h3 class="text-white font-bold text-2xl mb-6">Tu Nuevo Organigrama Híbrido</h3>
+
+                    <div class="w-full">
+                        <!-- Organogram Visualization -->
+                        <div id="ai-organogram" class="flex flex-col items-center space-y-10">
+                            <!-- Filled by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CREDIBILITY FOOTER (Full Width Block) -->
+                <div class="w-full mb-8 text-center mt-8">
+                    <p class="text-[10px] text-gray-500 uppercase tracking-widest"><i
+                            class="fa-solid fa-scale-balanced mr-1"></i> Estimaciones conservadoras sujetas a
+                        Auditoría Técnica Real</p>
+                    <ul id="res-roadmap" class="space-y-4 relative z-10 mb-8"></ul>
+                    <div class="flex items-center gap-6 border-t border-white/5 pt-6">
+                        <div class="w-24 h-24 flex-shrink-0"><canvas id="costChart"></canvas></div>
+                        <div>
+                            <h5 class="font-bold text-white text-sm mb-1">Análisis de ROI</h5>
+                            <p class="text-xs text-gray-400">Retorno estimado en <span
+                                    class="text-green-400 font-bold">45 días</span>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="mt-10 pt-8 border-t border-white/10 flex flex-col md:flex-row gap-4 items-center justify-between relative z-10">
+                <button onclick="generateLiveDemo()"
+                    class="w-full md:w-auto px-8 py-4 rounded-xl border border-sky-500/30 text-sky-400 font-bold hover:bg-sky-500/10 transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-laptop-code"></i> Ver Prototipo Técnico
+                </button>
+            </div>
+        </div>
+        </div>
+
+        <!-- STEP 5: DEMO -->
+        <div id="step-demo" class="hidden-step text-center max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold mb-6 text-green-400"><i class="fa-solid fa-terminal mr-2"></i> Builder Agent:
+                Generando Prototipo...</h2>
+            <div class="terminal-window p-6 text-left text-green-500 bg-black h-64 overflow-y-auto mb-8 font-mono text-sm"
+                id="terminal-output"></div>
+            <div id="demo-container"
+                class="glass-panel p-2 hidden-step border-2 border-green-500/50 relative overflow-hidden">
+                <div class="bg-slate-900 h-96 flex items-center justify-center">
+                    <p class="text-gray-500">Cargando interfaz...</p>
+                </div>
+            </div>
+            <div class="mt-8">
+                <a href="https://wa.me/34666000000" target="_blank"
+                    class="text-white hover:text-green-400 transition underline">Contactar con Sergio (Humano)
+                    &rarr;</a>
+            </div>
+        </div>
+
+    </main>
+    <script src="assets/js/consulting_engine.js"></script>
+</body>
+
+</html>
