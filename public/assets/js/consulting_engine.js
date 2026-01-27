@@ -111,7 +111,7 @@
         document.getElementById('res-business').innerText = businessData.name.toUpperCase();
 
         // --- BACKEND INTEGRATION: Save & Send Email ---
-        fetch('api_save_consulting.php', {
+        fetch('api/save_consulting.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(businessData)
