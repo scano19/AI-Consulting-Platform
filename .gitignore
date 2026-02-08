@@ -1,0 +1,72 @@
+# ====================================
+# 🔒 PROTECCIÓN DE CREDENCIALES
+# ====================================
+
+# Variables de entorno (API keys, passwords, etc.)
+.env
+.env.*
+.env.local
+.env.development
+.env.production
+*.env
+
+# Archivos de secretos
+secrets/
+secrets.*
+*.secret
+*.secrets
+passwords.txt
+credentials.*
+
+# Claves y certificados
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+
+# Tokens de autenticación
+*.token
+auth.json
+config.local.json
+
+# ====================================
+# 📁 ARCHIVOS DEL SISTEMA
+# ====================================
+
+# Windows
+Thumbs.db
+Desktop.ini
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ====================================
+# 🛠️ DESARROLLO
+# ====================================
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+venv/
+.venv/
+env/
+
+# Node.js
+node_modules/
+npm-debug.log*
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
